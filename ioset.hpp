@@ -7,30 +7,28 @@
 #ifndef IOSET_IOSET_HPP
 #define IOSET_IOSET_HPP
 
-template <typename T,  T elem_, typename next_>
-struct StaticList {
-    using type = T;
-    using next = next_;
-    static constexpr auto elem = elem_;
+#include "staticlist.hpp"
+
+template<typename T, typename List, T b, typename F, F f>
+struct ApplyOpVec {
+    using type = typename Prepend<T,
+            typename ApplyOpVec<T, typename List::next, b, F, f>::type, f(List::elem, b)>::type;
 };
 
-struct ListEnd {};
-
-template<typename T, typename List, T toAdd> // Todo check that List is StaticList and T==List::type
-struct Add {
-    using type = StaticList<T, toAdd, List>;
+template<typename T, T b, typename F, F f>
+struct ApplyOpVec<T, ListEnd, b, F, f> {
+    using type = ListEnd;
 };
 
-template<typename List1, typename List2> // TODO Check that Lists have same type and are lists
-struct Concat {
-    using type = typename Add<typename List1::type, typename Concat<typename List1::next, List2>::type, List1::elem>::type;
+template<typename List1, typename List2, typename F, F f>
+struct CartesianProduct {
+    using type = typename Concat<typename ApplyOpVec<typename List1::type, List2, List1::elem, F, f>::type,
+            typename CartesianProduct<typename List1::next, List2, F, f>::type>::type;
 };
 
-template<typename List2>
-struct Concat<ListEnd, List2> {
-    using type = List2;
+template<typename List2, typename F, F f>
+struct CartesianProduct<ListEnd, List2, F, f> {
+    using type = ListEnd;
 };
-
-
 
 #endif //IOSET_IOSET_HPP
