@@ -8,8 +8,8 @@ constexpr auto add(T a, T b) -> T {
 }
 
 int main() {
-    StaticList<int, 1, StaticList<int, 2, StaticList<int, 3, ListEnd>>> a;
-    StaticList<int, 1, StaticList<int, 2, ListEnd>> b;
+    StaticListFromVariadicTemplate<int, 1, 2, 3>::type a;
+    StaticListFromVariadicTemplate<int, 1, 2>::type b;
 
     using CartesianProductT = CartesianProduct<decltype(a), decltype(b), decltype(&add<int>), add<int>>::type;
 
