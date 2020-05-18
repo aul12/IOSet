@@ -9,8 +9,11 @@ constexpr auto add(T a, T b) -> T {
 
 int main() {
     StaticList<int, 1, StaticList<int, 2, StaticList<int, 3, ListEnd>>> a;
-    StaticList<int, 10, StaticList<int, 20, ListEnd>> b;
-    std::cout << CartesianProduct<decltype(a), decltype(b), decltype(&add<int>), add<int>>::type{};
+    StaticList<int, 1, StaticList<int, 2, ListEnd>> b;
+
+    using CartesianProductT = CartesianProduct<decltype(a), decltype(b), decltype(&add<int>), add<int>>::type;
+
+    std::cout << RemoveDuplicates<CartesianProductT>::type{};
 
     return 0;
 }
