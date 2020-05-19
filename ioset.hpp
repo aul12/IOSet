@@ -10,6 +10,7 @@
 #include "staticlist.hpp"
 #include "op.hpp"
 #include "util.hpp"
+#include "sort.hpp"
 
 template<static_list List>
 class IOList {

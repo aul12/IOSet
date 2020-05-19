@@ -42,7 +42,7 @@ struct ApplyBinaryOpVec<T, ListEnd, b, F, f> {
 
 // Calculate the cartesian product of a set over a given operation
 template<static_list List1, static_list List2, typename F, F f> requires same_list_type<List1, List2> &&
-                                                                         binary_op<F, typename List1::type>
+                                                                         binary_op<F, typename List2::type>
 struct CartesianProduct {
     using type = typename Concat<typename ApplyBinaryOpVec<typename List1::type, List2, List1::elem, F, f>::type,
             typename CartesianProduct<typename List1::next, List2, F, f>::type>::type;

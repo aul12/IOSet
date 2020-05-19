@@ -9,11 +9,9 @@ constexpr auto add(T a, T b) -> T {
 
 int main() {
     StaticListFromVariadicTemplate<int, 1, 2, 3>::type a;
-    StaticListFromVariadicTemplate<int, 1, 2>::type b;
 
-    using CartesianProductT = CartesianProduct<decltype(a), decltype(b), decltype(&add<int>), add<int>>::type;
 
-    std::cout << RemoveDuplicates<CartesianProductT>::type{};
+    std::cout << RemoveItemAtIndex<decltype(a), 2>::type{};
 
     return 0;
 }
