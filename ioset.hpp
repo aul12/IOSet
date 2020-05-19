@@ -11,4 +11,9 @@
 #include "op.hpp"
 #include "util.hpp"
 
+template<typename List>
+class IOList {
+    public:
+};
+
 #endif //IOSET_IOSET_HPP

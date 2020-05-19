@@ -3,4 +3,6 @@ project(IOSet)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(IOSet main.cpp)
+
+add_executable(${PROJECT_NAME} main.cpp)
+target_compile_options(${PROJECT_NAME} PUBLIC "-fconcepts")
