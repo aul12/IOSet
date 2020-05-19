@@ -11,8 +11,8 @@ int main() {
     StaticListFromVariadicTemplate<int, 3, 2, 1>::type a;
 
 
-    std::cout << Min<decltype(a), true>::val<< std::endl;
-    std::cout << Min<decltype(a), true>::index<< std::endl;
+    std::cout << Min<decltype(a)>::val << std::endl;
+    std::cout << Min<decltype(a)>::index << std::endl;
 
     return 0;
 }

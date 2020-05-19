@@ -42,20 +42,26 @@ struct RemoveItemAtIndex {
 };
 
 template<static_list List, bool nextExists>
-struct Min {
+struct MinImpl {
     static constexpr auto val =
-            List::elem < Min<typename List::next, NextExists<typename List::next::next>::val>::val ? List::elem
-                                                                                             : Min<typename List::next, NextExists<typename List::next::next>::val>::val;
+            List::elem < MinImpl<typename List::next, NextExists<typename List::next::next>::val>::val ? List::elem
+                                                                                                       : MinImpl<typename List::next, NextExists<typename List::next::next>::val>::val;
     static constexpr std::size_t index =
-            (List::elem < Min<typename List::next, NextExists<typename List::next::next>::val>::val ? 0
-                                                                                             : Min<typename List::next, NextExists<typename List::next::next>::val>::index) + 1;
+            (List::elem < MinImpl<typename List::next, NextExists<typename List::next::next>::val>::val ? 0
+                                                                                                        : MinImpl<typename List::next, NextExists<typename List::next::next>::val>::index) + 1;
 };
 
 template<static_list List>
-struct Min<List, false> {
+struct MinImpl<List, false> {
     static constexpr auto val = List::elem;
     static constexpr std::size_t index = 0;
 };
 
+
+template<static_list List>
+struct Min {
+    static constexpr auto val = MinImpl<List, true>::val;
+    static constexpr std::size_t index = MinImpl<List, true>::index;
+};
 
 #endif //IOSET_SORT_HPP
