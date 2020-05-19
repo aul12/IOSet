@@ -11,7 +11,7 @@
 #include "op.hpp"
 #include "util.hpp"
 
-template<typename List>
+template<static_list List>
 class IOList {
     public:
 };
