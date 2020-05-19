@@ -41,5 +41,21 @@ struct RemoveItemAtIndex {
     using type = typename RemoveItemAtIndexImpl<List, index, NextExists<typename List::next>::val>::type;
 };
 
+template<static_list List, bool nextExists>
+struct Min {
+    static constexpr auto val =
+            List::elem < Min<typename List::next, NextExists<typename List::next::next>::val>::val ? List::elem
+                                                                                             : Min<typename List::next, NextExists<typename List::next::next>::val>::val;
+    static constexpr std::size_t index =
+            (List::elem < Min<typename List::next, NextExists<typename List::next::next>::val>::val ? 0
+                                                                                             : Min<typename List::next, NextExists<typename List::next::next>::val>::index) + 1;
+};
+
+template<static_list List>
+struct Min<List, false> {
+    static constexpr auto val = List::elem;
+    static constexpr std::size_t index = 0;
+};
+
 
 #endif //IOSET_SORT_HPP

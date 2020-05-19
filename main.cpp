@@ -8,10 +8,11 @@ constexpr auto add(T a, T b) -> T {
 }
 
 int main() {
-    StaticListFromVariadicTemplate<int, 1, 2, 3>::type a;
+    StaticListFromVariadicTemplate<int, 3, 2, 1>::type a;
 
 
-    std::cout << RemoveItemAtIndex<decltype(a), 2>::type{};
+    std::cout << Min<decltype(a), true>::val<< std::endl;
+    std::cout << Min<decltype(a), true>::index<< std::endl;
 
     return 0;
 }
