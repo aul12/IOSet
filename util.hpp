@@ -37,16 +37,6 @@ struct RemoveDuplicates<ListEnd> {
 };
 
 
-template<typename T, T t0, T ... ts>
-struct StaticListFromVariadicTemplate {
-    using type = StaticList<T, t0, typename StaticListFromVariadicTemplate<T, ts...>::type>;
-};
-
-template<typename T, T t0>
-struct StaticListFromVariadicTemplate<T, t0> {
-    using type = StaticList<T, t0, ListEnd>;
-};
-
 template<static_list List>
 struct NormalizeList {
     using type = typename Sort<typename RemoveDuplicates<List>::type>::type;

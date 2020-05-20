@@ -11,6 +11,7 @@
 #include "op.hpp"
 #include "util.hpp"
 #include "sort.hpp"
+#include "generator.hpp"
 
 template<static_list List>
 class IOList {
