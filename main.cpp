@@ -12,18 +12,12 @@ constexpr auto mul(T a, T b) -> T {
     return a * b;
 }
 
-constexpr auto dub(int a) -> int {
-    return a*2;
-}
 
 int main() {
-    /*StaticListFromVariadicTemplate<int, 4, 5, 5, 2, 3, 0, 1, 6>::type a;
-    Range<int, 0, 10>::type b;
+    IOListBase<Range<int, 0, 10>::type> a{-1};
+    IOListBase<Range<int, 0, 20>::type> b{2};
 
-    std::cout << CartesianProduct<decltype(a), decltype(b), decltype(&mul<int>), mul<int>>::type{};*/
-
-    IOListBase<Range<int, 0, 10>::type> iol{-1};
-    std::cout << iol.unaryOp<decltype(&dub), dub>();
+    std::cout << a.binaryOp<decltype(b)::list, decltype(&mul<int>), mul>(b);
 
     return 0;
 }

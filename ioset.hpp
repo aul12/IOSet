@@ -16,6 +16,7 @@
 template<static_list List>
 class IOListBase {
     public:
+        using list = List;
         using type = typename List::type;
 
         // Only required runtime check prefer literals
@@ -33,6 +34,12 @@ class IOListBase {
         template<typename F, F f> requires unary_op<F, type>
         auto unaryOp() const {
             return IOListBase<typename ApplyUnaryOp<List, F, f>::type>{f(val)};
+        }
+
+        // Universal binary op
+        template<static_list ListRhs, typename F, F f> requires binary_op<F, type> && same_list_type<List, ListRhs>
+        auto binaryOp(IOListBase<ListRhs> rhs) const {
+            return IOListBase<typename CartesianProduct<List, ListRhs, F, f>::type>{f(val, static_cast<type>(rhs))};
         }
 
         // Get underlying value
