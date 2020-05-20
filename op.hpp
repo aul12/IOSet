@@ -18,23 +18,23 @@ template<typename F, typename T>
 concept binary_op = std::is_invocable<F, T, T>::value;
 
 // Transform a set with a unary operation
-template<static_list List, typename F, F f> requires unary_op<F, typename List::type>
-struct AppleUnaryOpImpl {
+template<static_list List, typename F, F f> requires unary_op<F, typename List::type> || list_end<List>
+struct ApplyUnaryOpImpl {
     using type = typename Prepend<
                     typename List::type,
-                    typename AppleUnaryOpImpl<typename List::next, F, f>::type
+                    typename ApplyUnaryOpImpl<typename List::next, F, f>::type
                     , f(List::elem)
                  >::type;
 };
 
 template<typename F, F f>
-struct AppleUnaryOpImpl<ListEnd, F, f> {
+struct ApplyUnaryOpImpl<ListEnd, F, f> {
     using type = ListEnd;
 };
 
 template<static_list List, typename F, F f> requires unary_op<F, typename List::type>
-struct AppleUnaryOp {
-    using type = typename NormalizeList<typename AppleUnaryOpImpl<List, F, f>::type>::type;
+struct ApplyUnaryOp {
+    using type = typename NormalizeList<typename ApplyUnaryOpImpl<List, F, f>::type>::type;
 };
 
 // Helper function: Apply a binary operation with one fixed operand

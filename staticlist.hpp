@@ -49,6 +49,9 @@ struct IsListOfType<T, ListEnd> {
 template<typename T, typename List>
 concept list_of_type = IsListOfType<T, List>::val;
 
+template<typename List>
+concept list_end = std::is_same<List, ListEnd>::value;
+
 // List of same type concepts
 template<static_list L1, static_list L2>
 struct ListOfSameType {

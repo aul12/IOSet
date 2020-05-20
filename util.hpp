@@ -42,4 +42,18 @@ struct NormalizeList {
     using type = typename Sort<typename RemoveDuplicates<List>::type>::type;
 };
 
+template<typename T, static_list List> requires list_of_type<T, List>
+struct DynamicContains {
+    constexpr static auto check(typename List::type t) {
+        return t == List::elem || DynamicContains<T, typename List::next>::check(t);
+    }
+};
+
+template<typename T>
+struct DynamicContains<T, ListEnd> {
+    constexpr static auto check(T) {
+        return false;
+    }
+};
+
 #endif //IOSET_UTIL_HPP
