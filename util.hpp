@@ -8,16 +8,7 @@
 #define IOSET_UTIL_HPP
 
 #include "staticlist.hpp"
-
-template<typename T, static_list List, T t> requires list_of_type<T, List>
-struct Contains {
-    static constexpr bool val = (List::elem == t || Contains<T, typename List::next, t>::val);
-};
-
-template<typename T, T t>
-struct Contains<T, ListEnd, t> {
-    static constexpr bool val = false;
-};
+#include "sort.hpp"
 
 template<bool isNecessary, typename T, static_list List, T toAdd> requires list_of_type<T, List>
 struct PrependIfNecessary {
@@ -54,6 +45,11 @@ struct StaticListFromVariadicTemplate {
 template<typename T, T t0>
 struct StaticListFromVariadicTemplate<T, t0> {
     using type = StaticList<T, t0, ListEnd>;
+};
+
+template<static_list List>
+struct NormalizeList {
+    using type = typename Sort<typename RemoveDuplicates<List>::type>::type;
 };
 
 #endif //IOSET_UTIL_HPP

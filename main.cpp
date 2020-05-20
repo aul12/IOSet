@@ -8,9 +8,9 @@ constexpr auto add(T a, T b) -> T {
 }
 
 int main() {
-    StaticListFromVariadicTemplate<int, 4, 5, 2, 3, 0, 1, 6>::type a;
+    StaticListFromVariadicTemplate<int, 4, 5, 5, 2, 3, 0, 1, 6>::type a;
 
-    //std::cout << Sort<decltype(a)>::type{};
+    std::cout << NormalizeList<decltype(a)>::type{};
 
     return 0;
 }

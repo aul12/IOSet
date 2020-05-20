@@ -105,4 +105,15 @@ struct Size<ListEnd> {
     static constexpr std::size_t val = 0;
 };
 
+template<typename T, static_list List, T t> requires list_of_type<T, List>
+struct Contains {
+    static constexpr bool val = (List::elem == t || Contains<T, typename List::next, t>::val);
+};
+
+template<typename T, T t>
+struct Contains<T, ListEnd, t> {
+    static constexpr bool val = false;
+};
+
+
 #endif //IOSET_STATICLIST_HPP
