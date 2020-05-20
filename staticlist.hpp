@@ -81,7 +81,13 @@ struct Prepend {
 
 template<static_list List1, static_list List2> requires same_list_type<List1, List2>
 struct Concat {
-    using type = typename Prepend<typename List1::type, typename Concat<typename List1::next, List2>::type, List1::elem>::type;
+    using type = typename Prepend<
+                    typename List1::type,
+                    typename Concat<
+                        typename List1::next, List2
+                    >::type,
+                    List1::elem
+                >::type;
 };
 
 template<static_list List2>

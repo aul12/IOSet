@@ -32,8 +32,12 @@ struct PrependIfNecessary<false, T, List, toAdd> {
 
 template<static_list List>
 struct RemoveDuplicates {
-    using type = typename PrependIfNecessary<!Contains<typename List::type, typename List::next, List::elem>::val,
-            typename List::type, typename RemoveDuplicates<typename List::next>::type, List::elem>::type;
+    using type = typename PrependIfNecessary<
+                    !Contains<typename List::type, typename List::next, List::elem>::val,
+                    typename List::type,
+                    typename RemoveDuplicates<typename List::next>::type,
+                    List::elem
+                 >::type;
 };
 
 template<>
