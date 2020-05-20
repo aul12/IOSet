@@ -49,6 +49,7 @@ struct RemoveItemAtIndexImpl<List, 0, false> {
 
 template<static_list List, std::size_t index>
 struct RemoveItemAtIndex {
+    static_assert(index < Size<List>::val, "Remove out of bounds!");
     using type = typename RemoveItemAtIndexImpl<
                     List,
                     index,

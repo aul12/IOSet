@@ -95,4 +95,14 @@ struct Concat<ListEnd, List2> {
     using type = List2;
 };
 
+template<static_list List>
+struct Size {
+    static constexpr std::size_t val = Size<typename List::next>::val + 1;
+};
+
+template<>
+struct Size<ListEnd> {
+    static constexpr std::size_t val = 0;
+};
+
 #endif //IOSET_STATICLIST_HPP
