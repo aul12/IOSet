@@ -1,23 +1,23 @@
 #include <iostream>
 
-#include "ioset.hpp"
+#include "generator.hpp"
+#include "operators.hpp"
 
-template<typename T>
-constexpr auto add(T a, T b) -> T {
-    return a + b;
-}
+using Test = Enumerated<int, 0, 13>;
 
-template<typename T>
-constexpr auto mul(T a, T b) -> T {
-    return a * b;
-}
+auto works(Range<int, 0, 3>) {}
 
+auto doesNotWork(Range<int, 1, 3>) {}
 
 int main() {
-    IOListBase<Range<int, 0, 10>::type> a{-1};
-    IOListBase<Range<int, 0, 20>::type> b{2};
+    Range<int, 0, 10> a{1};
+    Constant<int, 0> b{0};
 
-    std::cout << a.binaryOp<decltype(b)::list, decltype(&mul<int>), mul>(b);
+    auto prod = a * b;
+
+    works(prod);
+
+    doesNotWork(prod);
 
     return 0;
 }

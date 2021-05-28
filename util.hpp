@@ -56,4 +56,17 @@ struct DynamicContains<T, ListEnd> {
     }
 };
 
+template<static_list sub, static_list supper> requires ListOfSameType<sub, supper>::val
+struct IsSubset {
+    static constexpr auto val = Contains<typename sub::type,
+                                         supper,
+                                         sub::elem>::val
+                                and IsSubset<typename sub::next, supper>::val;
+};
+
+template<static_list supper>
+struct IsSubset<ListEnd, supper> {
+    static constexpr auto val = true;
+};
+
 #endif //IOSET_UTIL_HPP
